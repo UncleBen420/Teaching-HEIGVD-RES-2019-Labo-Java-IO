@@ -19,6 +19,12 @@ public class DFSFileExplorer implements IFileExplorer {
 	  
 	  
 	  vistor.visit(rootDirectory);
+if(rootDirectory.isDirectory()) {
+		  
+		  for(File son : rootDirectory.listFiles()) {
+			  this.explore(son,vistor);
+		  }
+	  }
     //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 

@@ -158,15 +158,13 @@ public class Application implements IApplication {
       @Override
       public void visit(File file) {
     	  
-    	  
-    	  if(file.isFile()) {
-    		  System.out.println(file.getPath());
-    	  }else if(file.isDirectory()) {
-    		  System.out.println(file.getPath());
-    		  for(File son : file.listFiles()) {
-    			  visit(son);
-    		  }
-    	  }
+    	  try {
+			writer.write(file.getPath()+"/"+file.getName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+    	  System.out.println(file.getPath());
     	  
         /*
          * There is a missing piece here. Notice how we use an anonymous class here. We provide the implementation
