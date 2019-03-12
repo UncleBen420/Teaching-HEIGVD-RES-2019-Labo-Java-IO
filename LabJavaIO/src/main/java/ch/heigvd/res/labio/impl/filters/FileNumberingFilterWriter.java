@@ -3,6 +3,7 @@ package ch.heigvd.res.labio.impl.filters;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -17,25 +18,73 @@ import java.util.logging.Logger;
  */
 public class FileNumberingFilterWriter extends FilterWriter {
 
-  private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
+	private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
 
-  public FileNumberingFilterWriter(Writer out) {
-    super(out);
-  }
+	private Integer lineCounter;
+	private boolean complexChar;
 
-  @Override
-  public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+	public FileNumberingFilterWriter(Writer out) {
+		super(out);
+		lineCounter = 0;
+		complexChar = false;
+	}
 
-  @Override
-  public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+	@Override
+	public void write(String str, int off, int len) throws IOException {
+		
+		String temp = str.substring(off, off + len);
+		
+		for(int i = 0; i < temp.length(); i++) {
+			this.write(temp.charAt(i));
+		}
 
-  @Override
-  public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+
+		for(int i = off; i < len + off; i++) {
+			this.write(cbuf[i]);
+		}
+
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
+
+	@Override
+	public void write(int c) throws IOException {
+
+		if(lineCounter == 0) {
+			this.out.write((++lineCounter).toString());
+			this.out.write((int) '\t');
+		}
+		
+		if((char) c == '\r') {
+			complexChar = true;
+			this.out.write(c);
+		}
+		else if ((char) c == '\n') {
+			
+			this.out.write(c);
+			this.out.write((++lineCounter).toString());
+			this.out.write((int) '\t');
+			complexChar = false;
+			
+		}else {
+			
+			if(complexChar){
+				this.out.write((++lineCounter).toString());
+				this.out.write((int) '\t');
+				this.out.write(c);
+				complexChar = false;	
+			}else {	
+				this.out.write(c);
+			}
+		}
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
 
 }
