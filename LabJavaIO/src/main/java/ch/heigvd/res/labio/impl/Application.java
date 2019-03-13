@@ -7,8 +7,12 @@ import ch.heigvd.res.labio.interfaces.IFileExplorer;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
 import ch.heigvd.res.labio.quotes.QuoteClient;
 import ch.heigvd.res.labio.quotes.Quote;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.logging.Level;
@@ -132,20 +136,21 @@ public class Application implements IApplication {
   void storeQuote(Quote quote, String filename) throws IOException {
     //throw new UnsupportedOperationException("The student has not implemented this method yet.");
     
-    
-    
-    
-    
-    
-	  String dirs = WORKSPACE_DIRECTORY + "/quotes";
+
+	  String directory = WORKSPACE_DIRECTORY;
 	    for (String tag : quote.getTags()) {
-	      dirs += "/" + tag;
+	    	directory += "/" + tag;
 	    }
-	    new File(dirs).mkdirs();
-	    File newfile = new File(dirs + "/" + filename);
-	    newfile.createNewFile();
+	    new File(directory).mkdirs();
+
 	    
-    
+   	    
+	    // Write the quote in the file
+	    Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(directory + "/" + filename), "UTF-8"));
+	    writer.write(quote.getQuote());
+	    writer.close();
+	    
+	    
   }
   
   /**
@@ -159,13 +164,11 @@ public class Application implements IApplication {
       public void visit(File file) {
     	  
     	  try {
-			writer.write(file.getPath()+"/"+file.getName());
+			writer.write(file.getPath()+"\n");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-		}
-    	  System.out.println(file.getPath());
-    	  
+		}    	  
         /*
          * There is a missing piece here. Notice how we use an anonymous class here. We provide the implementation
          * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
