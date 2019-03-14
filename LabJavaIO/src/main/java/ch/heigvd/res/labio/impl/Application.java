@@ -174,8 +174,7 @@ public class Application implements IApplication {
 				try {
 					writer.write(file.getPath() + "\n");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
+					 e.printStackTrace();
 				}
 				/*
 				 * There is a missing piece here. Notice how we use an anonymous class here. We
