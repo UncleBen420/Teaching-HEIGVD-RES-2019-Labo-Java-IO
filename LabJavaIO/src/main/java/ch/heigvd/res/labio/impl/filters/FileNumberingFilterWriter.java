@@ -31,10 +31,12 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
 	@Override
 	public void write(String str, int off, int len) throws IOException {
-		
+
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
+
 		String temp = str.substring(off, off + len);
-		
-		for(int i = 0; i < temp.length(); i++) {
+
+		for (int i = 0; i < temp.length(); i++) {
 			this.write(temp.charAt(i));
 		}
 
@@ -45,7 +47,9 @@ public class FileNumberingFilterWriter extends FilterWriter {
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
 
-		for(int i = off; i < len + off; i++) {
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
+
+		for (int i = off; i < len + off; i++) {
 			this.write(cbuf[i]);
 		}
 
@@ -56,30 +60,34 @@ public class FileNumberingFilterWriter extends FilterWriter {
 	@Override
 	public void write(int c) throws IOException {
 
-		if(lineCounter == 0) {
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
+
+		// Si on est a la premeiere ligne on ecrit le numero meme si il n'y a pas de
+		// retoru a la ligne
+		if (lineCounter == 0) {
 			this.out.write((++lineCounter).toString());
 			this.out.write((int) '\t');
 		}
-		
-		if((char) c == '\r') {
+
+		// On regarde si on a le caractere \r
+		if ((char) c == '\r') {
 			complexChar = true;
 			this.out.write(c);
-		}
-		else if ((char) c == '\n') {
-			
+		} else if ((char) c == '\n') {
+
 			this.out.write(c);
 			this.out.write((++lineCounter).toString());
 			this.out.write((int) '\t');
 			complexChar = false;
-			
-		}else {
-			
-			if(complexChar){
+
+		} else {
+
+			if (complexChar) {
 				this.out.write((++lineCounter).toString());
 				this.out.write((int) '\t');
 				this.out.write(c);
-				complexChar = false;	
-			}else {	
+				complexChar = false;
+			} else {
 				this.out.write(c);
 			}
 		}

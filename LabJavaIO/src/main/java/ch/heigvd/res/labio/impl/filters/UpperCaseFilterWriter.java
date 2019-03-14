@@ -9,44 +9,48 @@ import java.io.Writer;
  * @author Olivier Liechti
  */
 public class UpperCaseFilterWriter extends FilterWriter {
-  
-  public UpperCaseFilterWriter(Writer wrappedWriter) {
-    super(wrappedWriter);
-  }
 
-  @Override
-  public void write(String str, int off, int len) throws IOException {
-	 
-	  String temp = str.substring(off, len+off);
-	  
-	  temp = temp.toUpperCase();
-	  this.out.write(temp);
-	  
-	  
-	  
-   // throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+	public UpperCaseFilterWriter(Writer wrappedWriter) {
+		super(wrappedWriter);
+	}
 
-  @Override
-  public void write(char[] cbuf, int off, int len) throws IOException {
-	  
-	  for(int i = off; i < len+off; i++) { 
-		  this.write(cbuf[i]);
-	  }
-	  
+	@Override
+	public void write(String str, int off, int len) throws IOException {
 
-	  
-	  
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
 
-  @Override
-  public void write(int c) throws IOException {
-	  
-	  int temp = Character.toUpperCase((char)c);
-	  this.out.write(temp);  
-	  
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+		String temp = str.substring(off, len + off);
+
+		temp = temp.toUpperCase();
+		this.out.write(temp);
+
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
+
+		for (int i = off; i < len + off; i++) {
+			this.write(cbuf[i]);
+		}
+
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
+
+	@Override
+	public void write(int c) throws IOException {
+
+		// Modifie par Rémy Vuagniaux pour le Labo 2 RES
+
+		int temp = Character.toUpperCase((char) c);
+		this.out.write(temp);
+
+		// throw new UnsupportedOperationException("The student has not implemented this
+		// method yet.");
+	}
 
 }
